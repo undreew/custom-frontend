@@ -2,6 +2,7 @@
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
+const { StaticRouter } = require("react-router-dom/server");
 
 // enable on-the-fly transpile for server-side requires of JSX during dev
 require("@babel/register")({
@@ -55,7 +56,17 @@ app.use((req, res) => {
 			return res.status(500).send("Internal server error");
 		}
 
-		const appHtml = renderToString(React.createElement(App));
+		const context = {};
+
+		const appHtml = renderToString(
+			React.createElement(
+				StaticRouter,
+				{ location: req.url, context },
+				React.createElement(App) // App should now be router-agnostic
+			)
+		);
+
+		// inject into index template:
 		const rendered = htmlData.replace(
 			'<div id="root"></div>',
 			`<div id="root">${appHtml}</div>`
