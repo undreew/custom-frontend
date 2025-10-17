@@ -20,7 +20,7 @@ module.exports = {
 		chunkFilename: isDevelopment
 			? "[name].chunk.js"
 			: "[name].[contenthash].chunk.js",
-		publicPath: "/",
+		publicPath: process.env.APP_CONTEXT ? `/${process.env.APP_CONTEXT}/` : "/",
 		clean: true,
 	},
 
