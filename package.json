@@ -4,7 +4,7 @@
 	"description": "A simple React project setup with Webpack and Babel",
 	"main": "index.js",
 	"scripts": {
- 		"plop": "plop --plopfile ./etc/plop/plop.js",
+		"plop": "plop --plopfile ./etc/plop/plop.js",
 		"start": "nodemon server/server.js",
 		"start:dev": "node -r dotenv/config server/server.js dotenv_config_path=.env.dev",
 		"start:prod": "node -r dotenv/config server/server.js dotenv_config_path=.env.prod",
@@ -15,6 +15,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@babel/register": "^7.28.3",
+		"dotenv": "^17.2.3",
 		"express": "^5.1.0",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
