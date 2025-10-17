@@ -27,7 +27,9 @@ module.exports = () => {
 			path: path.resolve(__dirname, "../dist"),
 			// allow multiple named chunks (entry + runtime + vendors) without filename conflicts
 			filename: "[name].js",
-			publicPath: "/",
+			publicPath: process.env.APP_CONTEXT
+				? `/${process.env.APP_CONTEXT}/`
+				: "/",
 			chunkFilename: "[name].js",
 		},
 		resolve: { extensions: [".js", ".jsx"] },

@@ -38,6 +38,7 @@ const App = require(path.resolve(__dirname, "../app/App")).default;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const APP_CONTEXT = process.env.APP_CONTEXT || '';
 const PUBLIC = path.resolve(__dirname, "../public");
 
 // attach webpack middleware (serves bundle from memory)
@@ -57,19 +58,26 @@ app.use((req, res) => {
 		}
 
 		const context = {};
+		const basePath = APP_CONTEXT ? `/${APP_CONTEXT}` : '';
 
 		const appHtml = renderToString(
 			React.createElement(
 				StaticRouter,
-				{ location: req.url, context },
+				{ location: req.url, context, basename: basePath },
 				React.createElement(App) // App should now be router-agnostic
 			)
 		);
 
-		// inject into index template:
-		const rendered = htmlData.replace(
+		// inject into index template and pass APP_CONTEXT to client
+		let rendered = htmlData.replace(
 			'<div id="root"></div>',
 			`<div id="root">${appHtml}</div>`
+		);
+
+		// Inject APP_CONTEXT as global variable for client
+		rendered = rendered.replace(
+			'</head>',
+			`<script>window.__APP_CONTEXT__ = "${APP_CONTEXT}";</script></head>`
 		);
 
 		res.send(rendered);
@@ -78,5 +86,9 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
 	console.log(`Dev SSR server listening at http://localhost:${PORT}`);
+	if (APP_CONTEXT) {
+		console.log(`App Context: /${APP_CONTEXT}/`);
+		console.log(`Access via nginx: http://localhost/${APP_CONTEXT}/`);
+	}
 });
 // ...existing code...
