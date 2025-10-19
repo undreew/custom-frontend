@@ -6,11 +6,10 @@
 	"scripts": {
 		"plop": "plop --plopfile ./etc/plop/plop.js",
 		"start": "nodemon server/server.js",
-		"start:dev": "node -r dotenv/config server/server.js dotenv_config_path=.env.dev",
-		"start:prod": "node -r dotenv/config server/server.js dotenv_config_path=.env.prod",
+		"start-dev": "node -r dotenv/config server/server.js dotenv_config_path=.env.dev",
+		"start-prod": "node -r dotenv/config server/server.js dotenv_config_path=.env.prod",
 		"build": "cross-env NODE_ENV=production webpack --config etc/webpack.prod.config.js",
-		"build:analyze": "cross-env NODE_ENV=production webpack-bundle-analyzer dist/**/*.js",
-		"serve:prod": "npm run build && npm run start:prod",
+		"build-analyze": "cross-env NODE_ENV=production webpack-bundle-analyzer dist/**/*.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
