@@ -10,6 +10,11 @@ require("@babel/register")({
 		["@babel/preset-env", { targets: { node: "current" } }],
 		["@babel/preset-react", { runtime: "automatic" }],
 	],
+	plugins: [
+		["transform-require-ignore", {
+			"extensions": [".css"]
+		}]
+	],
 	extensions: [".js", ".jsx"],
 	ignore: [/node_modules/],
 });
